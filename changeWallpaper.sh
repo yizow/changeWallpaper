@@ -4,6 +4,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 IMAGE_PATH=$DIR/wallpaper
 IMAGE_DOWNLOADING=$IMAGE_PATH\2
+URL_SAVE_FILE=$DIR/url.txt
 URL='www.reddit.com/r/earthporn/top/?sort=top&t=day'
 
 # export DBUS_SESSION_BUS_ADDRESS environment variable
@@ -17,6 +18,9 @@ IMAGE_URL=$(curl "$URL" 2>/dev/null | tr \< \\n | grep -E 'https?://[^"]*\.jpg"'
 
 # Save to IMAGE
 wget "$IMAGE_URL" -O "$IMAGE_DOWNLOADING"
+
+# Save IMAGE_URL 
+echo "$IMAGE_URL" > $URL_SAVE_FILE
 
 # Check if we need to change backgroudn settings
 CURRENT_BACKGROUND=$(gsettings get org.cinnamon.desktop.background picture-uri)
