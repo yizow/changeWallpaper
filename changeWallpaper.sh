@@ -14,7 +14,8 @@ PID=$(echo $PID | cut -d" " -f1)
 export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
 
 # Search page source for url links ending in .jpg, choose a random one
-IMAGE_URL=$(curl "$URL" 2>/dev/null | tr \< \\n | grep -E 'https?://[^"]*\.jpg"' | sed -e 's!.*https\?://\([^"]*\.jpg\).*!\1!g' | sort -u | shuf -n 1)
+IMAGE_URL=$(wget "$URL" -O - | tr \< \\n | grep -E 'https?://[^"]*\.jpg"' | sed -e 's!.*https\?://\([^"]*\.jpg\).*!\1!g' | sort -u | shuf -n 1)
+# echo $IMAGE_URL
 
 # Save to IMAGE
 wget "$IMAGE_URL" -O "$IMAGE_DOWNLOADING"
