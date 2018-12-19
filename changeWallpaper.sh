@@ -15,8 +15,7 @@ export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/en
 
 # Search page source for url links ending in .jpg, choose a random one
 IMAGE_URL=$(wget "$URL" -O - | sed 's/data-url="/\n/g' | grep -E '^https?://[^"]*\.jpg"' | sed -e 's!^https\?://\([^"]*\.jpg\).*!\1!' | sort -u | shuf -n 1)
-echo "Image URL:"
-echo $IMAGE_URL
+printf "Image URL:" $IMAGE_URL
 
 # Save to IMAGE
 wget "$IMAGE_URL" -O "$IMAGE_DOWNLOADING"
