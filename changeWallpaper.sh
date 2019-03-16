@@ -35,8 +35,8 @@ fi
 rm $HOME/.cache/wallpaper/*
 mv -f $IMAGE_DOWNLOADING $IMAGE_PATH
 
-# Add this program as cron job to be run every hour (by default)
-CRON_JOB='0 * * * * '
+# Add this program as cron job to be run every twenty minutes (by default)
+CRON_JOB='*/20 * * * * '
 CRON_JOB+="$DIR/$(basename $0)"
 # Check if this cron job has been added before. If not, add it.
 TMP_FILE=$DIR/tmpCron
