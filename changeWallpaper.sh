@@ -13,8 +13,8 @@ PID=$(pgrep $GRAPHICS)
 PID=$(echo $PID | cut -d" " -f1)
 export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
 
-# Search page source for url links ending in .jpg, choose a random one
-IMAGES=$(wget "$URL" -O - | sed 's/data-url="/\n/g' | grep -E '^https?://[^"]*\.jpg"' | sed -e 's!^https\?://\([^"]*\.jpg\).*!\1!' | sort -u)
+# Search page source for url links ending in .jpg or .jpeg, choose a random one
+IMAGES=$(wget "$URL" -O - | sed 's/data-url="/\n/g' | sed -n -E 's/(https?[^ "]*?\.jpe?g).*?/\1/p' | sort -u)
 printf "Found %d images\n" $(echo $IMAGES | wc -w)
 IMAGE_URL=$(echo $IMAGES | tr " " "\n" | shuf -n 1)
 printf "Image URL:" $IMAGE_URL
